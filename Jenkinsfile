@@ -18,11 +18,19 @@ pipeline {
                 }
             }
         }
+    }
 
-        // stage('Docker Build') {
-        //     steps {
-        //         bat 'docker build -t angular-ui .'
-        //     }
-        // }
+    post {
+        success {
+            echo 'Build successful – starting Angular app'
+
+            dir('angular') {
+                bat 'npm start'
+            }
+        }
+
+        failure {
+            echo 'Build failed – app not started'
+        }
     }
 }
