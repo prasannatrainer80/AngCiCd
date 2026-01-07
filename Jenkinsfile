@@ -26,7 +26,7 @@ post {
         bat 'docker build -t angular-ui-ci .'
         bat 'docker stop angular-ui-ci || exit 0'
         bat 'docker rm angular-ui-ci || exit 0'
-        bat 'docker run -d -p 80:80 --name angular-ui-ci angular-ui-ci'
+        bat 'docker run -d -p 9111:80 --name angular-ui-ci angular-ui-ci'
     }
 
     failure {
