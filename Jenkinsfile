@@ -19,18 +19,19 @@ pipeline {
             }
         }
     }
+post {
+    success {
+        echo 'Build successful – deploying Angular using Docker'
 
-    post {
-        success {
-            echo 'Build successful – starting Angular app'
-
-            dir('angular') {
-                bat 'npm start'
-            }
-        }
-
-        failure {
-            echo 'Build failed – app not started'
-        }
+        bat 'docker build -t angular-ui-ci .'
+        bat 'docker stop angular-ui-ci || exit 0'
+        bat 'docker rm angular-ui-ci || exit 0'
+        bat 'docker run -d -p 80:80 --name angular-ui-ci angular-ui-ci'
     }
+
+    failure {
+        echo 'Build failed – deployment skipped'
+    }
+}
+
 }
